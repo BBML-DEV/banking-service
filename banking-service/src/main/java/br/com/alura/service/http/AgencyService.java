@@ -2,7 +2,7 @@ package br.com.alura.service.http;
 
 import br.com.alura.domain.Agency;
 import br.com.alura.domain.http.AgencyHttp;
-import br.com.alura.domain.http.RegistrationStatus;
+import br.com.alura.domain.http.SituacaoCadastral;
 import br.com.alura.exception.AgencyNotFoundException;
 import jakarta.enterprise.context.ApplicationScoped;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
@@ -22,13 +22,12 @@ public class AgencyService {
     public void register(Agency agency){
         AgencyHttp agencyHttp = registrationStatusHttpService.searchCpnj(agency.getCnpj());
 
-        if(agencyHttp != null && agencyHttp.getRegistrationStatus().equals(RegistrationStatus.ACTIVE)){
+        if (agencyHttp != null && SituacaoCadastral.ATIVO.equals(agencyHttp.getSituacaoCadastral())) {
             agencies.add(agency);
         } else {
             throw new AgencyNotFoundException();
         }
     }
-
     public Agency searchAgenctById(Integer id){
         return agencies.stream().filter( agency -> agency.getId().equals(id)).toList().getFirst();
     }

@@ -2,26 +2,28 @@ package br.com.alura.domain;
 
 public class Agency {
     private Integer id;
-    private String name;
-    private String socialreason;
+    private String nome;
+    private String razaosocial;
     private String cnpj;
-    private Address address;
+    private Address endereco;
 
-    public String getName() {
-        return name;
+    public Integer getId() {
+        return id;
     }
 
-    public String getSocialreason() {
-        return socialreason;
+    public String getNome() {
+        return nome;
+    }
+
+    public String getRazaosocial() {
+        return razaosocial;
     }
 
     public String getCnpj() {
         return cnpj;
     }
 
-    public Address getAddress() {
-        return address;
+    public Address getEndereco() {
+        return endereco;
     }
-
-    public Integer getId() {return id;}
 }

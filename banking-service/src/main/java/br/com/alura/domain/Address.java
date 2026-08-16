@@ -2,29 +2,29 @@ package br.com.alura.domain;
 
 public class Address {
     private Integer id;
-    private String street;
-    private String addressLine;
-    private String complement;
-    private Integer streetNumber;
+    private String rua;
+    private String logradouro;
+    private String complemento;
+    private Integer numero;
 
 
     public Integer getId() {
         return id;
     }
 
-    public String getStreet() {
-        return street;
+    public String getRua() {
+        return rua;
     }
 
-    public String getAddressLine() {
-        return addressLine;
+    public String getLogradouro() {
+        return logradouro;
     }
 
-    public String getComplement() {
-        return complement;
+    public String getComplemento() {
+        return complemento;
     }
 
-    public Integer getStreetNumber() {
-        return streetNumber;
+    public Integer getNumero() {
+        return numero;
     }
 }
