@@ -1,10 +1,20 @@
 package br.com.alura.domain;
 
+import jakarta.persistence.*;
+
+@Entity
 public class Agency {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nome;
-    private String razaosocial;
+
+    @Column(name = "razao_social")
+    private String razaoSocial;
     private String cnpj;
+
+    @OneToOne
+    @JoinColumn(name = "endereco_id")
     private Address endereco;
 
     public Integer getId() {
@@ -15,8 +25,8 @@ public class Agency {
         return nome;
     }
 
-    public String getRazaosocial() {
-        return razaosocial;
+    public String getRazaoSocial() {
+        return razaoSocial;
     }
 
     public String getCnpj() {
