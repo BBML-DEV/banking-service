@@ -4,12 +4,9 @@ import br.com.alura.domain.Agency;
 import br.com.alura.domain.http.AgencyHttp;
 import br.com.alura.domain.http.SituacaoCadastral;
 import br.com.alura.exception.AgencyNotFoundException;
+import br.com.alura.repository.AgencyRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
-
-import java.util.ArrayList;
-import java.util.List;
-
 
 @ApplicationScoped
 public class AgencyService {
@@ -17,28 +14,31 @@ public class AgencyService {
     @RestClient
     private RegistrationStatusHttpService registrationStatusHttpService;
 
-    private List<Agency> agencies = new ArrayList<>();
+    private final AgencyRepository agencyRepository;
+
+    AgencyService(AgencyRepository agencyRepository){
+        this.agencyRepository = agencyRepository;
+    }
 
     public void register(Agency agency){
         AgencyHttp agencyHttp = registrationStatusHttpService.searchCpnj(agency.getCnpj());
 
         if (agencyHttp != null && SituacaoCadastral.ATIVO.equals(agencyHttp.getSituacaoCadastral())) {
-            agencies.add(agency);
+            agencyRepository.persist(agency);
         } else {
             throw new AgencyNotFoundException();
         }
     }
-    public Agency searchAgenctById(Integer id){
-        return agencies.stream().filter( agency -> agency.getId().equals(id)).toList().getFirst();
+    public Agency searchAgenctById(Long id){
+        return agencyRepository.findById(id);
     }
 
-    public void deleteAgencyById(Integer id){
-        agencies.removeIf(agency -> agency.getId().equals(id));
+    public void deleteAgencyById(Long id){
+       agencyRepository.deleteById(id);
     }
 
     public void updateAgency(Agency agency){
-        deleteAgencyById(agency.getId());
-        register(agency);
+        agencyRepository.update("nome = ?1, razaoSocial = ?2, cnpj = ?3 where id = ?4", agency.getNome(), agency.getRazaoSocial(), agency.getCnpj(), agency.getId());
     }
 
 }

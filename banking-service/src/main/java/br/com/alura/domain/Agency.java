@@ -13,7 +13,7 @@ public class Agency {
     private String razaoSocial;
     private String cnpj;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "endereco_id")
     private Address endereco;
 
